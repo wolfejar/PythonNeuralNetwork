@@ -5,12 +5,29 @@ import math
 
 class Layer:
 
-    def __init__(self, num_neurons, inputs_per_neuron, outputs_per_neuron):
-        self.output_layer = False
+    def __init__(self, num_neurons, previous_layer, outputs_per_neuron):
         self.neurons = []
         self.neurons.append(Neuron.new_bias_neuron(outputs_per_neuron))
+        for x in range(len(num_neurons)):
+            weights_in = []
+            for neuron in previous_layer.neurons:
+                weights_in.append(neuron.weights_out[x])
+            self.neurons.append(Neuron.new_neuron_from_outputs(weights_in, len(weights_in), outputs_per_neuron))
+
+    @classmethod
+    def new_input_layer(cls, num_neurons, inputs_per_neuron, outputs_per_neuron):
+        cls.neurons = []
         for x in range(1, num_neurons-1):
-            self.neurons.append(Neuron(inputs_per_neuron, outputs_per_neuron))
+            cls.neurons.append(Neuron(inputs_per_neuron, outputs_per_neuron))
+
+    @classmethod
+    def new_output_layer(cls, num_neurons, previous_layer, outputs_per_neuron):
+        cls.neurons = []
+        for pointer in range(len(num_neurons)):
+            weights_in = []
+            for neuron in previous_layer.neurons:
+                weights_in.append(neuron.weights_out[pointer])
+            cls.neurons.append(Neuron.new_neuron_from_outputs(weights_in, len(weights_in), outputs_per_neuron))
 
     def set_layer_neuron_values(self, last_layer_values):
         start = 1
