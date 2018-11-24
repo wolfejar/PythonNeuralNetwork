@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f22c093-6bdf-4a2b-b298-2ef8a35439d0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PythonNeuralNet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PythonNeuralNet.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Layer" beforeDir="false" afterPath="$PROJECT_DIR$/Layer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Layer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Layer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Network.py" beforeDir="false" afterPath="$PROJECT_DIR$/Network.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,50 +14,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1043149922">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="2" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="3" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="Layer" value="1" />
-          <entry key="py" value="4" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Python" value="5" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="Layer" value="2215" />
-          <entry key="dummy" value="3" />
-          <entry key="py" value="3422" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="5637" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="12" lean-forward="true" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+            <state relative-caret-position="165">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -65,11 +28,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="295">
+              <caret line="21" column="32" lean-forward="true" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
               <folding>
-                <marker date="1540849958910" expanded="true" signature="39:40" ph="..." />
-                <marker date="1540849958910" expanded="true" signature="39:45" ph="..." />
+                <element signature="e#1#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,13 +40,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Layer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="27" column="49" lean-forward="true" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
+            <state relative-caret-position="930">
+              <caret line="62" column="60" lean-forward="true" selection-start-line="62" selection-start-column="60" selection-end-line="62" selection-end-column="60" />
               <folding>
-                <element signature="e#0#25#0" expanded="true" />
-                <marker date="1540848375345" expanded="true" signature="64:65" ph="..." />
-                <marker date="1540848375345" expanded="true" signature="64:70" ph="..." />
-                <marker date="1540848375345" expanded="true" signature="894:1201" ph="..." />
+                <element signature="e#0#4#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,13 +52,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Neuron.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+            <state relative-caret-position="45">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1540844359080" expanded="true" signature="41:42" ph="..." />
-                <marker date="1540844359080" expanded="true" signature="41:47" ph="..." />
-                <marker date="1540844359080" expanded="true" signature="852:1149" ph="..." />
               </folding>
             </state>
           </provider>
@@ -122,16 +78,17 @@
       <list>
         <option value="$PROJECT_DIR$/Layer" />
         <option value="$PROJECT_DIR$/Neuron.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/Layer.py" />
         <option value="$PROJECT_DIR$/Network.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1823" />
-    <option name="width" value="1400" />
-    <option name="height" value="900" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="48" />
+    <option name="y" value="23" />
+    <option name="width" value="1303" />
+    <option name="height" value="810" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -143,8 +100,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="PythonNeuralNet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PythonNeuralNet" type="462c0819:PsiDirectoryNode" />
+              <item name="PythonNeuralNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PythonNeuralNetwork" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -155,7 +112,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -183,9 +140,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1439" y="0" width="1682" height="1023" extended-state="6" />
+    <frame x="48" y="23" width="1303" height="810" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24984913" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15600625" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -196,7 +153,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32729805" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -204,50 +161,40 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Layer.py">
+    <entry file="file://$PROJECT_DIR$/Neuron.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="27" column="49" lean-forward="true" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <marker date="1540848375345" expanded="true" signature="64:65" ph="..." />
-            <marker date="1540848375345" expanded="true" signature="64:70" ph="..." />
-            <marker date="1540848375345" expanded="true" signature="894:1201" ph="..." />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Neuron.py">
+    <entry file="file://$PROJECT_DIR$/Layer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        <state relative-caret-position="930">
+          <caret line="62" column="60" lean-forward="true" selection-start-line="62" selection-start-column="60" selection-end-line="62" selection-end-column="60" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <marker date="1540844359080" expanded="true" signature="41:42" ph="..." />
-            <marker date="1540844359080" expanded="true" signature="41:47" ph="..." />
-            <marker date="1540844359080" expanded="true" signature="852:1149" ph="..." />
+            <element signature="e#0#4#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="12" lean-forward="true" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="295">
+          <caret line="21" column="32" lean-forward="true" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
           <folding>
-            <marker date="1540849958910" expanded="true" signature="39:40" ph="..." />
-            <marker date="1540849958910" expanded="true" signature="39:45" ph="..." />
+            <element signature="e#1#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

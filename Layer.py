@@ -1,13 +1,15 @@
 from Neuron import Neuron
-import Main
 import math
 
 
 class Layer:
 
-    def __init__(self, num_neurons, previous_layer, outputs_per_neuron):
+    def __init__(self, num_neurons, previous_layer, outputs_per_neuron, learning_rate, ml_lambda):
+        from Neuron import Neuron
         self.neurons = []
         self.neurons.append(Neuron.new_bias_neuron(outputs_per_neuron))
+        self.learning_rate = learning_rate
+        self.ml_lambda = ml_lambda
         for x in range(len(num_neurons)):
             weights_in = []
             for neuron in previous_layer.neurons:
@@ -54,13 +56,13 @@ class Layer:
             if is_bias:
                 for x in range(len(neuron.weights_out)):
                     cost = (1.0/sample_length) * neuron.change[x]
-                    neuron.weights_out[x] = neuron.weights_out[x] - (Main.learning_rate * cost)
+                    neuron.weights_out[x] = neuron.weights_out[x] - (self.learning_rate * cost)
                 is_bias = False
             else:
                 for x in range(len(neuron.weights_out)):
                     sign = -1 if neuron.change[x] > 0 else 1
-                    cost = ((1.0/sample_length) * neuron.change[x]) + (Main.ml_lambda * sign * neuron.weights_out[x])
-                    neuron.weights_out[x] = neuron.weights_out[x] - (Main.learning_rate * cost)
+                    cost = ((1.0/sample_length) * neuron.change[x]) + (self.ml_lambda * sign * neuron.weights_out[x])
+                    neuron.weights_out[x] = neuron.weights_out[x] - (self.learning_rate * cost)
 
     def set_layer_deltas(self, errors):
         for neuron in self.neurons:
