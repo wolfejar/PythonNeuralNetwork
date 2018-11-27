@@ -2,34 +2,35 @@ from Neuron import Neuron
 import math
 
 
-class Layer:
+class Layer(object):
 
-    def __init__(self, num_neurons, previous_layer, outputs_per_neuron, learning_rate, ml_lambda):
-        from Neuron import Neuron
-        self.neurons = []
-        self.neurons.append(Neuron.new_bias_neuron(outputs_per_neuron))
-        self.learning_rate = learning_rate
-        self.ml_lambda = ml_lambda
-        for x in range(len(num_neurons)):
-            weights_in = []
-            for neuron in previous_layer.neurons:
-                weights_in.append(neuron.weights_out[x])
-            self.neurons.append(Neuron.new_neuron_from_outputs(weights_in, len(weights_in), outputs_per_neuron))
-
-    @classmethod
-    def new_input_layer(cls, num_neurons, inputs_per_neuron, outputs_per_neuron):
-        cls.neurons = []
-        for x in range(1, num_neurons-1):
-            cls.neurons.append(Neuron(inputs_per_neuron, outputs_per_neuron))
-
-    @classmethod
-    def new_output_layer(cls, num_neurons, previous_layer, outputs_per_neuron):
-        cls.neurons = []
-        for pointer in range(len(num_neurons)):
-            weights_in = []
-            for neuron in previous_layer.neurons:
-                weights_in.append(neuron.weights_out[pointer])
-            cls.neurons.append(Neuron.new_neuron_from_outputs(weights_in, len(weights_in), outputs_per_neuron))
+    def __init__(self, num_neurons, previous_layer, inputs_per_neuron, outputs_per_neuron, learning_rate, ml_lambda,
+                 layer_type):
+        # from Neuron import Neuron
+        self.output_layer = False
+        if layer_type == "input":
+            self.neurons = []
+            for x in range(1, num_neurons - 1):
+                self.neurons.append(Neuron(inputs_per_neuron, outputs_per_neuron, 0, "input"))
+        elif layer_type == "output":
+            self.output_layer = True
+            self.neurons = []
+            for pointer in range(num_neurons):
+                weights_in = []
+                for neuron in previous_layer.neurons:
+                    weights_in.append(neuron.weights_out[pointer])
+                self.neurons.append(Neuron(len(weights_in), outputs_per_neuron, weights_in, "from_outputs"))
+        else:
+            # hidden layer
+            self.neurons = []
+            self.neurons.append(Neuron(0, outputs_per_neuron, 0, "bias"))
+            self.learning_rate = learning_rate
+            self.ml_lambda = ml_lambda
+            for x in range(num_neurons):
+                weights_in = []
+                for neuron in previous_layer.neurons:
+                    weights_in.append(neuron.weights_out[x])
+                self.neurons.append(Neuron(len(weights_in), outputs_per_neuron, weights_in, "hidden"))
 
     def set_layer_neuron_values(self, last_layer_values):
         start = 1

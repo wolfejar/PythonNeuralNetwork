@@ -2,18 +2,23 @@ import numpy
 import math
 
 
-class Network:
+class Network(object):
 
-    def __init__(self, learning_rate, ml_lambda, input_data, targets, max_accepted_error, output_layer_size, layer_size_arr):
+    def __init__(self, learning_rate, ml_lambda, input_data, targets, max_accepted_error, output_layer_size,
+                 layer_size_arr):
         from Layer import Layer
         self.layers = []
         for x in range(len(layer_size_arr)):
+            print(self.layers)
             if x == 0:
-                self.layers.append(Layer.new_input_layer(layer_size_arr[x], 1, layer_size_arr[x+1]))
-            elif 0 < x < len(layer_size_arr):
-                self.layers.append(Layer(layer_size_arr[x], self.layers[x-1], layer_size_arr[x+1]))
+                self.layers.append(Layer(layer_size_arr[x], 0, 1, layer_size_arr[x+1], learning_rate,
+                                         ml_lambda, "input"))
+            elif 0 < x < len(layer_size_arr)-1:
+                self.layers.append(Layer(layer_size_arr[x], self.layers[x-1], 0, layer_size_arr[x+1], learning_rate,
+                                         ml_lambda, "hidden"))
             else:
-                self.layers.append(Layer.new_output_layer(layer_size_arr[x], self.layers[x-1], output_layer_size))
+                self.layers.append(Layer(layer_size_arr[x], self.layers[x-1], 0, output_layer_size, learning_rate,
+                                         ml_lambda, "output"))
         self.learning_rate = learning_rate
         self.ml_lambda = ml_lambda
         self.input_data = input_data
@@ -104,9 +109,11 @@ class Network:
         return sample
 
     def get_y_sample(self, size):
+        print(self.targets)
         sample = numpy.zeros((size, len(self.targets[0])))
         for i in range(size):
             sample[i] = self.targets[i]
+        return sample
 
     def get_test_x_sample(self, size):
         test_sample = numpy.zeros((size, len(self.input_data[0])))
