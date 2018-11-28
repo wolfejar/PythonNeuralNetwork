@@ -9,7 +9,7 @@ class Network(object):
         from Layer import Layer
         self.layers = []
         for x in range(len(layer_size_arr)):
-            print(self.layers)
+            #print(self.layers)
             if x == 0:
                 self.layers.append(Layer(layer_size_arr[x], 0, 1, layer_size_arr[x+1], learning_rate,
                                          ml_lambda, "input"))
@@ -31,6 +31,8 @@ class Network(object):
         self.x_test_sample = [0]
         self.y_test_sample = [0]
         self.test_percentage = [0]
+        self.sample_correct_guesses = 0
+        self.sample_count = len(targets)
         self.test_network = 0 #set to TestNetwork.init()
 
     def get_results(self, network):
@@ -45,16 +47,16 @@ class Network(object):
 
     def train(self, iterations):
         for x in range(iterations):
-            sample_count = 0
-            sample_correct_guesses = 0
+            self.sample_count = 0
+            self.sample_correct_guesses = 0
             for i in range(len(self.y_sample)):
-                sample_count += 1
+                self.sample_count += 1
                 self.forward_propagate(i)
                 output_error = self.get_errors(i)
                 if self.get_is_correct(i):
                     self.sample_correct_guesses += 1
                 self.set_deltas(output_error)
-            self.backpropagate(x)
+            self.back_propagate(x)
 
             print("\n\n\n\n")
         #return self.best_test_percentage
@@ -109,7 +111,7 @@ class Network(object):
         return sample
 
     def get_y_sample(self, size):
-        print(self.targets)
+        #print(self.targets)
         sample = numpy.zeros((size, len(self.targets[0])))
         for i in range(size):
             sample[i] = self.targets[i]
