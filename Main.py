@@ -7,7 +7,7 @@ targets = IO.targets
 print "labels ", len(labels), " encodings ", len(unordered_input_data)
 # print(len(unordered_input_data))
 ordered_input_data = {}
-learning_rate = 0.05
+learning_rate = 1
 ml_lambda = 0
 saved_percentage = 0
 max_accepted_error = 0.4
@@ -28,9 +28,9 @@ for target in targets.items():
     for i, item in enumerate(target[1]):
         target[1][i] = item / 5.0
 
-for data in ordered_input_data.items():
+'''for data in ordered_input_data.items():
     for i, item in enumerate(data[1]):
-        data[1][i] = ((item + 1.0) / 2.0)
+        data[1][i] = ((item + 1.0) / 2.0)'''
 
 for target in targets.items():
     print target

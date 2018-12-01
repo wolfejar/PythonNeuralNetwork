@@ -67,6 +67,7 @@ class Layer(object):
                     cost = ((1.0/sample_length) * neuron.change[x]) + (self.ml_lambda * sign * neuron.weights_out[x])
                     neuron.weights_out[x] = neuron.weights_out[x] - (self.learning_rate * cost)
 
+    # neuron deltas and change not shifting much???
     def set_layer_deltas_from_errors(self, errors):
         for neuron in self.neurons:
             for x in range(len(neuron.weights_out)):
@@ -88,8 +89,8 @@ class Layer(object):
     def correct_inputs(self, previous_layer):
         if self.output_layer:
             pointer = 0
-            weights_in = []
             while pointer < len(self.neurons):
+                weights_in = []
                 for neuron in previous_layer.neurons:
                     weights_in.append(neuron.weights_out[pointer])
                 self.neurons[pointer].weights_in = weights_in
@@ -102,4 +103,3 @@ class Layer(object):
                     weights_in.append(neuron.weights_out[pointer])
                 self.neurons[pointer+1].weights_in = weights_in
                 pointer += 1
-
