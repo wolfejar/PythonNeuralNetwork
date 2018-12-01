@@ -6,11 +6,13 @@ class Layer(object):
 
     def __init__(self, num_neurons, previous_layer, inputs_per_neuron, outputs_per_neuron, learning_rate, ml_lambda,
                  layer_type):
-        # from Neuron import Neuron
         self.output_layer = False
+        self.learning_rate = learning_rate
+        self.ml_lambda = ml_lambda
         if layer_type == "input":
             self.neurons = []
-            for x in range(1, num_neurons - 1):
+            self.neurons.append(Neuron(0, outputs_per_neuron, 0, "bias"))
+            for x in range(num_neurons):
                 self.neurons.append(Neuron(inputs_per_neuron, outputs_per_neuron, 0, "input"))
         elif layer_type == "output":
             self.output_layer = True
@@ -24,8 +26,6 @@ class Layer(object):
             # hidden layer
             self.neurons = []
             self.neurons.append(Neuron(0, outputs_per_neuron, 0, "bias"))
-            self.learning_rate = learning_rate
-            self.ml_lambda = ml_lambda
             for x in range(num_neurons):
                 weights_in = []
                 for neuron in previous_layer.neurons:
@@ -48,7 +48,9 @@ class Layer(object):
             self.neurons[x].apply_sigmoid_function(final_value)
 
     def get_values(self):
-        values = self.neurons
+        values = []
+        for i in range(len(self.neurons)):
+            values.append(self.neurons[i].neuron_value)
         return values
 
     def adjust_weights(self, sample_length):
@@ -65,12 +67,18 @@ class Layer(object):
                     cost = ((1.0/sample_length) * neuron.change[x]) + (self.ml_lambda * sign * neuron.weights_out[x])
                     neuron.weights_out[x] = neuron.weights_out[x] - (self.learning_rate * cost)
 
-    def set_layer_deltas(self, errors):
+    def set_layer_deltas_from_errors(self, errors):
         for neuron in self.neurons:
             for x in range(len(neuron.weights_out)):
                 neuron.delta += neuron.weights_out[x] * errors[x]
-                neuron.change += (neuron.neuron_value * errors[x])
+                neuron.change[x] += (neuron.neuron_value * errors[x])
             neuron.delta *= neuron.neuron_value * (1.0 - neuron.neuron_value)
+
+    def set_layer_deltas_from_next_layer(self, next_layer):
+        for neuron in self.neurons:
+            for x in range(len(neuron.weights_out)):
+                neuron.delta += neuron.weights_out[x] * next_layer.neurons[x+1].delta
+                neuron.change[x] += neuron.neuron_value * next_layer.neurons[x+1].delta
 
     def reset_change_and_delta(self):
         for neuron in self.neurons:
@@ -84,7 +92,7 @@ class Layer(object):
             while pointer < len(self.neurons):
                 for neuron in previous_layer.neurons:
                     weights_in.append(neuron.weights_out[pointer])
-                self.neurons[pointer+1].weights_in = weights_in
+                self.neurons[pointer].weights_in = weights_in
                 pointer += 1
         else:
             pointer = 0

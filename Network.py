@@ -9,7 +9,7 @@ class Network(object):
         from Layer import Layer
         self.layers = []
         for x in range(len(layer_size_arr)):
-            #print(self.layers)
+            # num_neurons, previous_layer, inputs_per_neuron, outputs_per_neuron, learning_rate, ml_lambda, layer_type
             if x == 0:
                 self.layers.append(Layer(layer_size_arr[x], 0, 1, layer_size_arr[x+1], learning_rate,
                                          ml_lambda, "input"))
@@ -26,14 +26,14 @@ class Network(object):
         self.max_accepted_error = max_accepted_error
         self.correct_guesses = 0
         self.count = 0
-        self.x_sample = self.get_x_sample(300)
-        self.y_sample = self.get_y_sample(300)
+        self.x_sample = self.get_x_sample(170)
+        self.y_sample = self.get_y_sample(170)
         self.x_test_sample = [0]
         self.y_test_sample = [0]
         self.test_percentage = [0]
         self.sample_correct_guesses = 0
         self.sample_count = len(targets)
-        self.test_network = 0 #set to TestNetwork.init()
+        # self.test_network = 0 #set to TestNetwork.init()
 
     def get_results(self, network):
         result = ""
@@ -56,43 +56,50 @@ class Network(object):
                 if self.get_is_correct(i):
                     self.sample_correct_guesses += 1
                 self.set_deltas(output_error)
+                print self.layers[-1].get_values(), self.y_sample[i]
             self.back_propagate(x)
 
             print("\n\n\n\n")
         #return self.best_test_percentage
 
     def forward_propagate(self, i):
-        for k in range(len(self.x_sample[i])):
-            self.layers[0].neurons[k+1].neuron_value = self.x_sample[i][k]
-        for k in range(len(self.layers)-1):
-            self.layers[k+1].set_layer_neuron_values(self.layers[k].get_values())
+        if i in self.x_sample:
+            for k in range(len(self.x_sample[i])-1):
+                self.layers[0].neurons[k+1].neuron_value = self.x_sample[i][k]
+            for k in range(len(self.layers)-1):
+                self.layers[k+1].set_layer_neuron_values(self.layers[k].get_values())
 
     def get_errors(self, i):
         predictions = self.layers[len(self.layers)-1].get_values()
         actual = self.y_sample[i]
-        return numpy.subtract(predictions, actual)
+        result = numpy.subtract(predictions, actual)
+        # print result
+        return result
 
     def set_deltas(self, output_error):
-        self.layers[len(self.layers)-2].set_layer_deltas(output_error)
+        self.layers[-2].set_layer_deltas_from_errors(output_error)
         for k in range(len(self.layers)-2, -1, -1):
-            self.layers[k-1].set_layer_deltas(self.layers[k])
+            self.layers[k-1].set_layer_deltas_from_next_layer(self.layers[k])
 
     def back_propagate(self, x):
         percentage = (self.sample_correct_guesses / self.sample_count) * 100
-        print(str(x) + " \tTrain: " + "%\t\t")
-        self.test_network.updateNetwork(self.layers)
-        self.test_percentage = self.test_network.runTest()
+        print(str(x) + " \tTrain: " + str(percentage) + "%\t\t")
+        # self.test_network.updateNetwork(self.layers)
+        # self.test_percentage = self.test_network.runTest()
 
-        if self.test_percentage > self.best_test_percentage:
-            self.best_network = self.layers
-            self.best_test_percentage = self.test_percentage
+        # if self.test_percentage > self.best_test_percentage:
+        #    self.best_network = self.layers
+        #    self.best_test_percentage = self.test_percentage
 
-        for k in range(len(self.layers)-1, -1, -1):
-            self.layers[k-1].adjust_weights(len(self.y_sample))
-        for k in range(len(self.layers)-1, -1, -1):
-            self.layers[k-1].reset_change_and_delta()
-        for k in range(len(self.layers) - 1, -1, -1):
-            self.layers[k].correct_inputs(self.layers[k-1])
+        for i, k in reversed(list(enumerate(self.layers))):
+            if i > 0:
+                self.layers[i-1].adjust_weights(len(self.y_sample))
+        for i, k in reversed(list(enumerate(self.layers))):
+            if i > 0:
+                self.layers[i-1].reset_change_and_delta()
+        for i, k in reversed(list(enumerate(self.layers))):
+            if i > 0:
+                self.layers[i].correct_inputs(self.layers[i-1])
 
         return percentage
 
@@ -104,15 +111,14 @@ class Network(object):
         return True
 
     def get_x_sample(self, size):
-        sample = numpy.zeros((size, len(self.input_data[0])))
+        sample = {}
         for i in range(size):
-            for k in range(len(sample[i])):
-                sample[i][k] = self.input_data[i][k]
+            if i in self.input_data:
+                sample[i] = self.input_data[i]
         return sample
 
     def get_y_sample(self, size):
-        #print(self.targets)
-        sample = numpy.zeros((size, len(self.targets[0])))
+        sample = {}
         for i in range(size):
             sample[i] = self.targets[i]
         return sample
