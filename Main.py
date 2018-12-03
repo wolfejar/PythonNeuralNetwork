@@ -48,9 +48,9 @@ for data in ordered_input_data.items():
     print data
 
 neural_network = Network(learning_rate, ml_lambda, ordered_input_data, targets, max_accepted_error, output_layer_size,
-                         [len(ordered_input_data[0]), 15, output_layer_size])
+                         [len(ordered_input_data[0]), 10, output_layer_size])
 
 neural_network.train(2000)
-
-
+out_file = open("results.txt", "w")
+out_file.write(neural_network.get_results())
 

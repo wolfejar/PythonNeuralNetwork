@@ -1,5 +1,6 @@
 import numpy
 import math
+from TestNetwork import TestNetwork
 
 
 class Network(object):
@@ -34,17 +35,11 @@ class Network(object):
         self.test_percentage = [0]
         self.sample_correct_guesses = 0
         self.sample_count = len(targets)
-        self.test_network = TestNetwork(self.layers, self.x_test_sample, self.y_test_sample, max_accepted_error)
+        self.test_network = TestNetwork(self.layers, self.x_test_sample, self.y_test_sample, self.max_accepted_error)
 
-    def get_results(self, network):
-        result = ""
-        x = len(self.y_sample)
-        for i in range(len(self.input_data)):
-            if i == x:
-                result += "\n\n\n"
-            self.count += 1
-            for k in range(len(self.input_data[i])):
-                network.layers[0].neurons[k+1].neuron_value = self.input_data[i][k]
+    def get_results(self):
+        final_network = TestNetwork(self.layers, self.input_data, self.targets, self.max_accepted_error)
+        return final_network.get_final_result()
 
     def train(self, iterations):
         for x in range(iterations):
