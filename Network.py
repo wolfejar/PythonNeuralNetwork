@@ -7,6 +7,7 @@ class Network(object):
     def __init__(self, learning_rate, ml_lambda, input_data, targets, max_accepted_error, output_layer_size,
                  layer_size_arr):
         from Layer import Layer
+        from TestNetwork import TestNetwork
         self.layers = []
         for x in range(len(layer_size_arr)):
             # num_neurons, previous_layer, inputs_per_neuron, outputs_per_neuron, learning_rate, ml_lambda, layer_type
@@ -26,14 +27,14 @@ class Network(object):
         self.max_accepted_error = max_accepted_error
         self.correct_guesses = 0
         self.count = 0
-        self.x_sample = self.get_x_sample(170)
-        self.y_sample = self.get_y_sample(170)
-        self.x_test_sample = [0]
-        self.y_test_sample = [0]
+        self.x_sample = self.get_x_sample(180)  # size of train sample, total of 213 samples in JAFFE data set
+        self.y_sample = self.get_y_sample(180)
+        self.x_test_sample = self.get_test_x_sample(30)  # size of test sample
+        self.y_test_sample = self.get_test_y_sample(30)
         self.test_percentage = [0]
         self.sample_correct_guesses = 0
         self.sample_count = len(targets)
-        # self.test_network = 0 #set to TestNetwork.init()
+        self.test_network = TestNetwork(self.layers, self.x_test_sample, self.y_test_sample, max_accepted_error)
 
     def get_results(self, network):
         result = ""
@@ -49,7 +50,8 @@ class Network(object):
         for x in range(iterations):
             self.sample_count = 0
             self.sample_correct_guesses = 0
-            for i in range(len(self.y_sample)):
+            print "\n\nTrain"
+            for i in self.y_sample.keys():
                 self.sample_count += 1
                 self.forward_propagate(i)
                 output_error = self.get_errors(i)
@@ -58,19 +60,19 @@ class Network(object):
                 self.set_deltas(output_error)
                 print self.layers[-1].get_values(), self.y_sample[i]
             self.back_propagate(x)
-
             print("\n\n\n\n")
-        #return self.best_test_percentage
+        return
 
     def forward_propagate(self, i):
-        if i in self.x_sample:
-            for k in range(len(self.x_sample[i])-1):
-                self.layers[0].neurons[k+1].neuron_value = self.x_sample[i][k]
-            for k in range(len(self.layers)-1):
-                self.layers[k+1].set_layer_neuron_values(self.layers[k].get_values())
+        for k in range(len(self.x_sample[i])):
+            # set layer 1 values as inputs
+            self.layers[0].neurons[k+1].neuron_value = self.x_sample[i][k]
+        for k in range(len(self.layers)-1):
+            # propagate values forward from each layer
+            self.layers[k+1].set_layer_neuron_values(self.layers[k].get_values())
 
     def get_errors(self, i):
-        predictions = self.layers[len(self.layers)-1].get_values()
+        predictions = self.layers[-1].get_values()
         actual = self.y_sample[i]
         result = numpy.subtract(predictions, actual)
         # print result
@@ -79,17 +81,19 @@ class Network(object):
     def set_deltas(self, output_error):
         self.layers[-2].set_layer_deltas_from_errors(output_error)
         for k in range(len(self.layers)-2, -1, -1):
-            self.layers[k-1].set_layer_deltas_from_next_layer(self.layers[k])
+            if k > 0:
+                self.layers[k-1].set_layer_deltas_from_next_layer(self.layers[k])
 
     def back_propagate(self, x):
-        percentage = (self.sample_correct_guesses / self.sample_count) * 100
-        print(str(x) + " \tTrain: " + str(percentage) + "%\t\t")
-        # self.test_network.updateNetwork(self.layers)
-        # self.test_percentage = self.test_network.runTest()
+        percentage = (float(self.sample_correct_guesses) / float(self.sample_count)) * 100.0
 
-        # if self.test_percentage > self.best_test_percentage:
-        #    self.best_network = self.layers
-        #    self.best_test_percentage = self.test_percentage
+        self.test_network.update_network(self.layers)
+        self.test_percentage = self.test_network.run_test()
+
+        print(str(x) + " \tTrain: " + str(percentage) + "%\t\t" + "Test: " + str(self.test_percentage) + "%")
+        '''if self.test_percentage > self.best_test_percentage:
+            self.best_network = self.layers
+            self.best_test_percentage = self.test_percentage'''
 
         for i, k in reversed(list(enumerate(self.layers))):
             if i > 0:
@@ -120,18 +124,20 @@ class Network(object):
     def get_y_sample(self, size):
         sample = {}
         for i in range(size):
-            sample[i] = self.targets[i]
+            if i in self.input_data:
+                sample[i] = self.targets[i]
         return sample
 
     def get_test_x_sample(self, size):
-        test_sample = numpy.zeros((size, len(self.input_data[0])))
+        test_sample = {}
         for i in range(size):
-            for k in range(len(test_sample[i])):
-                test_sample[i, k] = self.input_data[len(self.input_data)-1-i, k]
+            if (len(self.targets)-1-i) in self.input_data:
+                test_sample[i] = self.input_data[len(self.targets)-1-i]
         return test_sample
 
     def get_test_y_sample(self, size):
-        test_sample = numpy.zeros((size, len(self.targets[0])))
+        test_sample = {}
         for i in range(size):
-            test_sample[i] = self.targets[len(self.targets)-1-i]
+            if (len(self.targets)-1-i) in self.input_data:
+                test_sample[i] = self.targets[(len(self.targets)-1-i)]
         return test_sample

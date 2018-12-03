@@ -5,6 +5,9 @@ data = dict(pickle.load(file("encodings.pickle")))
 labels = data["names"]
 encodings = data["encodings"]
 
+for item in data.items():
+    print item
+
 unordered_targets = file("target_data.txt")
 targets = {}
 for line in unordered_targets:

@@ -73,17 +73,18 @@ class Layer(object):
             for x in range(len(neuron.weights_out)):
                 neuron.delta += neuron.weights_out[x] * errors[x]
                 neuron.change[x] += (neuron.neuron_value * errors[x])
-            neuron.delta *= neuron.neuron_value * (1.0 - neuron.neuron_value)
+            neuron.delta *= (neuron.neuron_value * (1.0 - neuron.neuron_value))
 
     def set_layer_deltas_from_next_layer(self, next_layer):
         for neuron in self.neurons:
             for x in range(len(neuron.weights_out)):
-                neuron.delta += neuron.weights_out[x] * next_layer.neurons[x+1].delta
-                neuron.change[x] += neuron.neuron_value * next_layer.neurons[x+1].delta
+                neuron.delta += (neuron.weights_out[x] * next_layer.neurons[x+1].delta)
+                neuron.change[x] += (neuron.neuron_value * next_layer.neurons[x+1].delta)
+            neuron.delta *= (neuron.neuron_value * (1.0 - neuron.neuron_value))
 
     def reset_change_and_delta(self):
         for neuron in self.neurons:
-            neuron.change = [0] * neuron.num_weights_out
+            neuron.change = [0] * len(neuron.weights_out)
             neuron.delta = 0
 
     def correct_inputs(self, previous_layer):

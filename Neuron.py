@@ -31,7 +31,13 @@ class Neuron(object):
             self.weighted_sum = 0.0
 
     def apply_sigmoid_function(self, weighted_sum):
-        val = 1.0 / (1 + math.exp(-weighted_sum))
+        try:
+            val = 1.0 / (1 + math.exp(-weighted_sum))
+        except OverflowError:
+            if weighted_sum > 0:
+                val = 1
+            else:
+                val = 0
         if val > 0:
             self.neuron_value = val
 
