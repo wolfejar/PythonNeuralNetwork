@@ -8,13 +8,13 @@ print "labels ", len(labels), " encodings ", len(unordered_input_data)
 # print(len(unordered_input_data))
 ordered_input_data = {}
 learning_rate = 1  # best is about 0.7 ?
-ml_lambda = 0  # change to improve generalization
-saved_percentage = 0
+ml_lambda = 0.001  # change to improve generalization
+# saved_percentage = 0
 max_accepted_error = 0.5  # change this if not using binary targets
 output_layer_size = len(targets[0])
 binary_targets = True
 
-# reorganize encoding data
+# reorganize encoding data to match with corresponding targets
 for i, label in enumerate(labels):
     arr = label.split('.')
     index = int(arr[2])
@@ -39,7 +39,7 @@ else:
 '''
 for data in ordered_input_data.items():
     for i, item in enumerate(data[1]):
-        data[1][i] = item * 100
+        data[1][i] = item * 0.1
 '''
 
 for target in targets.items():
@@ -48,9 +48,9 @@ for data in ordered_input_data.items():
     print data
 
 neural_network = Network(learning_rate, ml_lambda, ordered_input_data, targets, max_accepted_error, output_layer_size,
-                         [len(ordered_input_data[0]), 10, output_layer_size])
+                         [len(ordered_input_data[0]), 50, output_layer_size])
 
-neural_network.train(2000)
+neural_network.train(10000)  # arg is number of iterations
 out_file = open("results.txt", "w")
 out_file.write(neural_network.get_results())
 

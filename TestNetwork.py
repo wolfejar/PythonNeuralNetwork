@@ -1,5 +1,4 @@
 import numpy
-import math
 
 
 class TestNetwork:
@@ -10,6 +9,9 @@ class TestNetwork:
         self.y_sample = y_sample
         self.max_accepted_error = max_accepted_error
         self.threshold = 0.5
+        self.true_positives = 0
+        self.false_positives = 0
+        self.false_negatives = 0
 
     def update_network(self, layers):
         self.layers = layers
@@ -35,25 +37,37 @@ class TestNetwork:
 
     def get_is_correct(self, i):
         # convert output to binary, above or below 0.5 threshold
+        is_correct = False
         binary_output = []
         for val in self.layers[-1].get_values():
             if val < self.threshold:
                 binary_output.append(0)
             else:
                 binary_output.append(1)
-        for k, output in enumerate(binary_output):  # if any of the outputs match the emotion, return true
-            if output == 1 and output == self.y_sample[i][k]:
-                return True
-        return False
+        errors = numpy.subtract(binary_output, self.y_sample[i])
+        if 1 in errors:
+            self.false_positives += 1
+        elif -1 in errors:
+            self.false_negatives += 1
+        else:
+            is_correct = True
+            self.true_positives += 1
+        return is_correct
         '''errors = numpy.subtract(binary_output, self.y_sample[i])
         for error in errors:
             if math.fabs(error) > math.fabs(self.max_accepted_error):
                 return False
         return True'''
 
+    # generate relevant metrics after training has completed
     def get_final_result(self):
         total = 0
         total_correct = 0
+
+        self.false_negatives = 0
+        self.true_positives = 0
+        self.false_positives = 0
+
         result_str = "RESULT\n"
         for i in self.y_sample.keys():
             if i in self.x_sample.keys():
@@ -67,4 +81,11 @@ class TestNetwork:
                     total_correct += 1
         result_str += "Accuracy: "
         result_str += str((float(total_correct) / float(total)) * 100)
+        result_str += "\nTrue Positives: " + str(self.true_positives) + "\n"
+        result_str += "False Postives: " + str(self.false_positives) + "\n"
+        result_str += "False Negatives: " + str(self.false_negatives) + "\n"
+        result_str += "Precision: " + str(float(self.true_positives) / (float(self.true_positives)
+                                                                        + float(self.false_positives))) + "\n"
+        result_str += "Recall: " + str(float(self.true_positives) / (float(self.true_positives) +
+                                                                     float(self.false_negatives))) + "\n"
         return result_str

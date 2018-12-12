@@ -66,6 +66,8 @@ class Layer(object):
                     sign = -1 if neuron.change[x] > 0 else 1
                     cost = ((1.0/sample_length) * neuron.change[x]) + (self.ml_lambda * sign * neuron.weights_out[x])
                     neuron.weights_out[x] = neuron.weights_out[x] - (self.learning_rate * cost)
+        if self.learning_rate  > 0.3:
+            self.learning_rate -= 0.001  # decrement learning rate by a small amount after each iteration
 
     # neuron deltas and change not shifting much???
     def set_layer_deltas_from_errors(self, errors):

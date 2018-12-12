@@ -28,17 +28,17 @@ class Network(object):
         self.max_accepted_error = max_accepted_error
         self.correct_guesses = 0
         self.count = 0
-        self.x_sample = self.get_x_sample(180)  # size of train sample, total of 213 samples in JAFFE data set
-        self.y_sample = self.get_y_sample(180)
-        self.x_test_sample = self.get_test_x_sample(30)  # size of test sample
-        self.y_test_sample = self.get_test_y_sample(30)
+        self.x_sample = self.get_x_sample(141)  # 141 size of train sample, total of 213 samples in JAFFE data set
+        self.y_sample = self.get_y_sample(141)
+        self.x_test_sample = self.get_test_x_sample(72)  # size of test sample
+        self.y_test_sample = self.get_test_y_sample(72)
         self.test_percentage = [0]
         self.sample_correct_guesses = 0
         self.sample_count = len(targets)
         self.test_network = TestNetwork(self.layers, self.x_test_sample, self.y_test_sample, self.max_accepted_error)
 
     def get_results(self):
-        final_network = TestNetwork(self.layers, self.input_data, self.targets, self.max_accepted_error)
+        final_network = TestNetwork(self.layers, self.x_test_sample, self.y_test_sample, self.max_accepted_error)
         return final_network.get_final_result()
 
     def train(self, iterations):
