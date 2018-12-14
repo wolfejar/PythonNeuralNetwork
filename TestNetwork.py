@@ -82,7 +82,7 @@ class TestNetwork:
         result_str += "Accuracy: "
         result_str += str((float(total_correct) / float(total)) * 100)
         result_str += "\nTrue Positives: " + str(self.true_positives) + "\n"
-        result_str += "False Postives: " + str(self.false_positives) + "\n"
+        result_str += "False Positives: " + str(self.false_positives) + "\n"
         result_str += "False Negatives: " + str(self.false_negatives) + "\n"
         result_str += "Precision: " + str(float(self.true_positives) / (float(self.true_positives)
                                                                         + float(self.false_positives))) + "\n"
